@@ -17,7 +17,7 @@ class Queue<T> {
         return queue.size
     }
 
-    fun getItem(int:Int): T {
+    fun getItem(int: Int): T {
         return queue[int]
     }
 

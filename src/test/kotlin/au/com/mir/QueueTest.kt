@@ -47,7 +47,38 @@ class QueueTest {
     }
 
     @Test
-    fun `size should return the `() {
+    fun `size should return the size of the queue`() {
+        // GIVEN
+        val queue = Queue<String>()
+        queue.enqueue("apple")
+        queue.enqueue("orange")
+        queue.enqueue("pear")
+        queue.enqueue("xmas tree")
 
+        val expectedSize = 4
+
+        // WHEN
+        val result = queue.size()
+
+        // THEN
+        assertEquals(expectedSize, result)
+    }
+
+    @Test
+    fun `getItem should return the item located at index n in queue`() {
+        // GIVEN
+        val queue = Queue<String>()
+        queue.enqueue("apple")
+        queue.enqueue("orange")
+        queue.enqueue("pear")
+        queue.enqueue("xmas tree")
+
+        val expected = "pear"
+
+        // WHEN
+        val result = queue.getItem(2)
+
+        // THEN
+        assertEquals(expected, result)
     }
 }
