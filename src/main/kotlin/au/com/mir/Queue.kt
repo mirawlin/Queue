@@ -1,20 +1,25 @@
 package au.com.mir
 
 import au.com.mir.exception.MaxCapacityException
+import au.com.mir.observer.QueueManager
 import java.util.*
 
-class Queue<T>(maxCapacity: Int?) {
+class Queue<T>(maxCapacity: Int? = null) {
     private val queue = LinkedList<T>()
-     private val queueMaxCapacity = maxCapacity
+    private val queueMaxCapacity = maxCapacity
+
+    val queueManager: QueueManager = QueueManager()
 
     fun enqueue(item: T) {
-        if (this.queueMaxCapacity == null || this.queue.size < this.queueMaxCapacity)
+        if (this.queueMaxCapacity == null || this.queue.size < this.queueMaxCapacity) {
             queue.addLast(item)
-        else
+            queueManager.notify("enqueue")
+        } else
             throw MaxCapacityException("Max Capacity of $queueMaxCapacity exceeded")
     }
 
     fun dequeue(): T {
+        queueManager.notify("dequeue")
         return queue.removeFirst()
     }
 
@@ -27,6 +32,6 @@ class Queue<T>(maxCapacity: Int?) {
     }
 
     override fun toString(): String {
-        return "Queue(queue=$queue)"
+        return "Queue(queue=$queue, queueMaxCapacity=$queueMaxCapacity, queueManager=$queueManager)"
     }
 }
